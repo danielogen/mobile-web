@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+    <script src="assets/js/vendor/jquery-1.11.1.min.js"></script>
+    <style>
+      .jquery-class {
+        background: #ccc;
+        font-size: 1.5em;
+        font-family: Arial;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+    <p id="para1">
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim
+      exercitationem quos magnam quae debitis adipisci reiciendis neque at!
+      Reiciendis neque eum atque cum ipsa! Sapiente fuga est delectus magni
+      inventore? Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse,
+      nesciunt, incidunt quaerat perferendis perspiciatis eaque expedita magni
+      nam quas, distinctio iure repellendus beatae. Praesentium dolorem adipisci
+      voluptatum hic, cupiditate doloribus.
+    </p>
+
+    <p class="para2">
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim
+      exercitationem quos magnam quae debitis adipisci reiciendis neque at!
+      Reiciendis neque eum atque cum ipsa! Sapiente fuga est delectus magni
+      inventore? Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse,
+      nesciunt, incidunt quaerat perferendis perspiciatis eaque expedita magni
+      nam quas, distinctio iure repellendus beatae. Praesentium dolorem adipisci
+      voluptatum hic, cupiditate doloribus.
+    </p>
+    <form id="frm">
+      <input type="text" id="name" />
+      <button type="submit" id="submit">Submit</button>
+    </form>
+
+    <script>
+      $(document).ready(function () {
+        // //alert("HI");
+        // $("#para1").hide(2000, function () {
+        //   alert("success");
+        // });
+        // //$("#para2").css("color", "red");
+        // $(".para2").css({
+        //   background: "#ccc",
+        //   "font-size": "1.5em",
+        //   "font-family": "Arial",
+        // });
+        // let para = $(".para2").text();
+        // alert(para);
+
+        //.click(function (e) {
+        //e.preventDefault();
+        //   let myName = $("#name").val();
+        //   alert(myName);
+
+        $("#para1").click(function () {
+          $("#para1").toggleClass("jquery-class");
+        });
+        $.ajax({
+          method: "GET",
+          url: "http://www.omdbapi.com?s=ava&apikey=a02c7f0",
+        })
+          .done(function (data) {
+            console.log(data);
+          })
+          .fail(function () {
+            alert("something is wrong...try again...");
+          });
+      });
+    </script>
+  </body>
+</html>
