@@ -157,8 +157,8 @@ In this step, you’ll create a PHP script for retrieving the sample data that y
 
 When you run the script for the first time, it will read the data from MySQL (that is, from disk) and then cache it to Redis. As a result subsequent reads of the products’ data will be from Redis (that is, from system RAM). System memory is multiple times faster than even the fastest solid-state drive, thus data will be retrieved faster from the Redis cache than reading from the system disk.
 
-> Note: 
-> While you might not get any performance boost, since you are retrieving just a few records from the MySQL database, several benchmarks prove that retrieving cached data from Redis is several times faster than reading it from MySQL when dealing with several hundred thousand records.
+> _Note:_ 
+> _While you might not get any performance boost, since you are retrieving just a few records from the MySQL database, several benchmarks prove that retrieving cached data from Redis is several times faster than reading it from MySQL when dealing with several hundred thousand records._
 
 Create a `products.php` file in the root directory of your website:
 ```bash
@@ -169,6 +169,99 @@ To start, enter the following information to connect and create an instance of R
 The address `127.0.0.1` connects to the localhost. You may change this value if you’re running `Redis` from a remote server. Remember to replace `REDIS_PASSWORD` with the specific password for `Redis` set in the `/etc/redis/redis.conf` configuration file.
 
 Also, enter the appropriate port number. By default, `Redis` runs on port `6379`:
+```php
+<?php
+
+$redis = new Redis();
+$redis->connect('127.0.0.1', 6379);
+$redis->auth('REDIS_PASSWORD');
+```
+The next step is initializing a PHP variable you’ll use as a key in Redis.
+
+As mentioned earlier in this guide, Redis acts as a key-value database and therefore you must have a unique key for the data that you intend to store and retrieve from it.
+
+So, define a `PRODUCTS` key by adding the following information to the `/var/www/html/products.php` file. You are free to use any name in place of `PRODUCTS` key.
+
+Your PHP script will use this key to cache information to Redis once data gets retrieved from the MySQL database:
+```php
+$key = 'PRODUCTS';
+```
+Next, include a conditional PHP `if...else` statement to check if the `PRODUCTS` key exists in `Redis`:
+```php 
+...
+if (!$redis->get($key)) {
+    $source = 'MySQL Server';
+    $database_name     = 'test_store';
+    $database_user     = 'test_user';
+    $database_password = 'PASSWORD';
+    $mysql_host        = 'localhost';
+
+    $pdo = new PDO('mysql:host=' . $mysql_host . '; dbname=' . $database_name, $database_user, $database_password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $sql  = "SELECT * FROM products";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+       $products[] = $row;
+    }
+
+    $redis->set($key, serialize($products));
+    $redis->expire($key, 10);
+
+} else {
+     $source = 'Redis Server';
+     $products = unserialize($redis->get($key));
+
+}
+
+echo $source . ': <br>';
+print_r($products);
+```
+If the key doesn’t exist in Redis, the script connects to the database that you created earlier, queries the `products` table, and stores the data in Redis using the `$redis->set($key, serialize($products))` command.
+
+The `$redis->expire($key, 10)`; command sets the expiration to 10 seconds. You may tweak this value depending on your cache policy.
+
+The $source variable helps you to identify the source of the data once it is echoed as an array at the end of the script using the echo `$source` and `print_r($products)`commands.
+
+Once you’ve put everything together, your `/var/www/html/products.php` file will be as follows:
+```php
+...
+if (!$redis->get($key)) {
+    $source = 'MySQL Server';
+    $database_name     = 'test_store';
+    $database_user     = 'test_user';
+    $database_password = 'PASSWORD';
+    $mysql_host        = 'localhost';
+
+    $pdo = new PDO('mysql:host=' . $mysql_host . '; dbname=' . $database_name, $database_user, $database_password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $sql  = "SELECT * FROM products";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+       $products[] = $row;
+    }
+
+    $redis->set($key, serialize($products));
+    $redis->expire($key, 10);
+
+} else {
+     $source = 'Redis Server';
+     $products = unserialize($redis->get($key));
+
+}
+
+echo $source . ': <br>';
+print_r($products);
+```
+Save and close the file.
+
+You’ve now set up a PHP script that will connect to MySQL and cache data to Redis. You’ll test your script in the next step.
+
 ### Step 4 — Testing the PHP Script
 
 ### Conclusion
