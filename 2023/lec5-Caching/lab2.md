@@ -97,7 +97,7 @@ Next, you’ll create a `products` table with three columns. You will use the `p
 The `product_name` field will hold the actual names of your items. In this case, a [VARCHAR data type](https://dev.mysql.com/doc/refman/8.0/en/char.html) with a length of `50` characters will be enough. The last column in the products table is the price—you will use the `DOUBLE` data type to accommodate prices with decimals (for example, 16.33).
 
 To create the products table, run the following command:
-```
+```mysql
 mysql> CREATE table products
 mysql> (
 mysql> product_id BIGINT PRIMARY KEY AUTO_INCREMENT,
