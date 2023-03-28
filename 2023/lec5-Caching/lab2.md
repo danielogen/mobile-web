@@ -263,6 +263,20 @@ Save and close the file.
 You’ve now set up a PHP script that will connect to MySQL and cache data to Redis. You’ll test your script in the next step.
 
 ### Step 4 — Testing the PHP Script
+To test if Redis is caching data from the MySQL database, you’ll enter the path of the PHP script in a browser window. Remember to replace `your_server_IP` with the public IP address of your server, like so: `http://your_server_IP/products.php`.
+
+When you run the script for the first time, you will receive the following output that displays data from the MySQL database because, at this point, the PHP script has not yet cached any data in Redis:
+```
+`MySQL Server`
+Array ( [0] => Array ( [product_id] => 1 [product_name] => Virtual Private Servers [price] => 5 ) [1] => Array ( [product_id] => 2 [product_name] => Managed Databases [price] => 15 ) [2] => Array ( [product_id] => 3 [product_name] => Block Storage [price] => 10 ) [3] => Array ( [product_id] => 4 [product_name] => Managed Kubernetes [price] => 60 ) [4] => Array ( [product_id] => 5 [product_name] => Load Balancer [price] => 10 ) )
+```
+Once you run the script again, you’ll get an output confirming that it’s reading data from Redis, which is acting as a cache for MySQL.
+
+```
+`Redis Server`
+Array ( [0] => Array ( [product_id] => 1 [product_name] => Virtual Private Servers [price] => 5 ) [1] => Array ( [product_id] => 2 [product_name] => Managed Databases [price] => 15 ) [2] => Array ( [product_id] => 3 [product_name] => Block Storage [price] => 10 ) [3] => Array ( [product_id] => 4 [product_name] => Managed Kubernetes [price] => 60 ) [4] => Array ( [product_id] => 5 [product_name] => Load Balancer [price] => 10 ) )
+```
+Remember that the key will expire after 10 seconds and data will again be retrieved from MySQL.
 
 ### Conclusion
 In this guide, you’ve used Redis to cache MySQL data with PHP on Ubuntu 20.04. You may use the coding in this guide to set up a caching mechanism for your MySQL data, which is especially useful for high-traffic web applications.
