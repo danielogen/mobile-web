@@ -44,35 +44,35 @@ $ sudo mysql -u root -p
 Enter the `root` password of your MySQL server that you set up in the LAMP prerequisite. Then, press `ENTER` to continue.
 
 Next, create a `test_store` database with the following command:
-```
+```mysql
 mysql> CREATE database test_store;
 ```
 Make sure the action is successful by confirming the output:
-```
+```mysql
 Output
 
 Query OK, 1 row affected (0.00 sec)
 ```
 Next, create a user for your database. We’ll call this user `test_user` in this tutorial. Replace `PASSWORD` with a strong password as well:
-```
+```mysql
 mysql> CREATE USER 'test_user'@'localhost' IDENTIFIED WITH mysql_native_password BY 'PASSWORD';
 ```
 Then grant `test_user` full privileges to the `test_store` database with:
-```
+```mysql
 mysql> GRANT ALL PRIVILEGES ON test_store.* TO 'test_user'@'localhost';
 ```
 Finally run the following command to reload the grant tables in MySQL:
-```
+```mysql
 mysql> FLUSH PRIVILEGES;
 ```
 Ensure you get the following output after each successful command:
-```
+```mysql
 Output
 
 Query OK, 0 rows affected (0.01 sec)
 ```
 End the MySQL root session:
-```
+```mysql
 mysql> quit;
 ```
 You’ll receive the word `Bye` and the system will take you back to the server’s command line interface.
@@ -82,11 +82,11 @@ Log back in to the MySQL server with the credentials for the `test_user` that yo
 $ mysql -u test_user -p
 ```
 Enter the password for the `test_user` to proceed. Then, switch to the test_store database when you’re in the `mysql>` prompt:
-```
+```mysql
 mysql> USE test_store;
 ```
 Ensure you receive the following output:
-```
+```mysql
 Output
 
 Database changed.
