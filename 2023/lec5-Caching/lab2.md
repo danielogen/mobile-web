@@ -35,6 +35,76 @@ $ sudo systemctl restart apache2
 ```
 Now that you have installed your dependencies, you’ll set up your database.
 ### Step 2 — Setting Up a Test Database, Table, and Sample Data
+In this step, you’ll create a MySQL database to store data permanently to disk. You’ll also create some tables and a user account with full privileges to the database.
+
+First, log in to your MySQL server as a `root` user:
+```console
+$ sudo mysql -u root -p
+```
+Enter the `root` password of your MySQL server that you set up in the LAMP prerequisite. Then, press `ENTER` to continue.
+
+Next, create a `test_store` database with the following command:
+```
+mysql> CREATE database test_store;
+```
+Make sure the action is successful by confirming the output:
+```
+Output
+
+Query OK, 1 row affected (0.00 sec)
+```
+Next, create a user for your database. We’ll call this user `test_user` in this tutorial. Replace `PASSWORD` with a strong password as well:
+```
+mysql> CREATE USER 'test_user'@'localhost' IDENTIFIED WITH mysql_native_password BY 'PASSWORD';
+```
+Then grant `test_user` full privileges to the `test_store` database with:
+```
+mysql> GRANT ALL PRIVILEGES ON test_store.* TO 'test_user'@'localhost';
+```
+Finally run the following command to reload the grant tables in MySQL:
+```
+mysql> FLUSH PRIVILEGES;
+```
+Ensure you get the following output after each successful command:
+```
+Output
+
+Query OK, 0 rows affected (0.01 sec)
+```
+End the MySQL root session:
+```
+mysql> quit;
+```
+You’ll receive the word `Bye` and the system will take you back to the server’s command line interface.
+
+Log back in to the MySQL server with the credentials for the `test_user` that you just created:
+```
+$ mysql -u test_user -p
+```
+Enter the password for the `test_user` to proceed. Then, switch to the test_store database when you’re in the `mysql>` prompt:
+```
+mysql> USE test_store;
+```
+Ensure you receive the following output:
+```
+Output
+
+Database changed.
+```
+
+Next, you’ll create a `products` table with three columns. You will use the `product_id` column to uniquely identify each product. To avoid assigning the IDs manually, you will use the `AUTO_INCREMENT` keyword. Then, you will use the `BIGINT` data type for the `product_id` column to support a large data set. The [BIGINT data type](https://dev.mysql.com/doc/refman/8.0/en/integer-types.html) can hold a minimum value of `-2^63` and a maximum value of `2^63-1`.
+
+The `product_name` field will hold the actual names of your items. In this case, a [VARCHAR data type](https://dev.mysql.com/doc/refman/8.0/en/char.html) with a length of `50` characters will be enough. The last column in the products table is the price—you will use the `DOUBLE` data type to accommodate prices with decimals (for example, 16.33).
+
+To create the products table, run the following command:
+```
+mysql> CREATE table products
+mysql> (
+mysql> product_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+mysql> product_name VARCHAR(50),
+mysql> price DOUBLE
+mysql> ) Engine = InnoDB;
+```
 
 ### Step 3 — Designing a PHP Script for Fetching and Caching MySQL Data
 
