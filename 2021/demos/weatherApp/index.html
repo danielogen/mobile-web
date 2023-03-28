@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="" />
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script src="http://maps.google.com/maps/api/js?sensor=false&key=AIzaSyAxEwbXiLJ26MgZ1xAwNlv4KB1KvQL0hF0"></script>
+    <style>
+      .main {
+        width: 80%;
+        height: 5em;
+        margin: 0 auto;
+      }
+      #w-img {
+        width: 80%;
+        height: 15em;
+        margin: 0 auto;
+        border: 1px #000 solid;
+        border-radius: 50%;
+        text-align: center;
+      }
+      #w-img img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 3em;
+        width: 7em;
+        height: 5em;
+      }
+      #map-sec {
+        width: 80%;
+        height: 10em;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body onload="getLocation()">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+    <div data-role="page" id="home">
+      <div data-role="header" data-theme="b" data-position="fixed">
+        <h1>weatherApp</h1>
+      </div>
+      <section data-role="main" class="ui-content">
+        <section id="w-img">
+          <img src="img/113.png" />
+          <p>The weather is: <b>Sunny</b></p>
+        </section>
+        <br />
+        <section class="main" id="map-sec">
+          <!-- Map goes here -->
+          <p id="p-map"></p>
+        </section>
+        <section>
+          <!-- <h4>Predict</h4> -->
+          <ul data-role="listview">
+            <li>Location: 0.3, 32.56</li>
+            <li>Name: Entebbe</li>
+            <li>Country: Uganda</li>
+            <li>Weather: Sunny</li>
+            <li>Temperature &deg;c: 18</li>
+            <li>Humidity: 85</li>
+          </ul>
+        </section>
+      </section>
+      <footer data-role="footer" data-position="fixed" data-theme="b">
+        <div data-role="navbar">
+          <ul>
+            <li>
+              <a href="#home" data-icon="home">Home</a>
+            </li>
+            <li>
+              <a href="#places" data-icon="location" class="ui-btn-active"
+                >Places</a
+              >
+            </li>
+            <li>
+              <a href="#about" data-icon="info">About</a>
+            </li>
+          </ul>
+        </div>
+      </footer>
+    </div>
+
+    <div data-role="page" id="places">
+      <div data-role="header" data-theme="b">
+        <h1>weatherApp</h1>
+      </div>
+      <section data-role="main" class="ui-content">
+        <ul
+          data-role="listview"
+          data-filter="true"
+          data-filter-reveal="false"
+          data-filter-placeholder="Search for districts..."
+          data-inset="true"
+        >
+              
+          <li><a href="#">Kampala</a></li>
+          <li><a href="#">Arua</a></li>
+          <li><a href="#">Mbarara</a></li>
+          <li><a href="#">Gulu</a></li>
+          <li><a href="#">Masaka</a></li>
+          <li><a href="#">Hoima</a></li>
+          <li><a href="#">Lira</a></li>
+          <li><a href="#">Mbale</a></li>
+          <li><a href="#">Jinja</a></li>
+          <li><a href="#">Entebbe</a></li>
+        </ul>
+      </section>
+      <footer data-role="footer" data-position="fixed" data-theme="b">
+        <div data-role="navbar">
+          <ul>
+            <li>
+              <a href="#home" data-icon="home">Home</a>
+            </li>
+            <li>
+              <a href="#places" data-icon="location" class="ui-btn-active"
+                >Places</a
+              >
+            </li>
+            <li>
+              <a href="#about" data-icon="info">About</a>
+            </li>
+          </ul>
+        </div>
+      </footer>
+    </div>
+
+    <script src="js/app.js" async defer></script>
+    <script>
+      var x = document.getElementById("p-map");
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+          x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
+
+      function showPosition(position) {
+        lat = position.coords.latitude;
+        lon = position.coords.longitude;
+        latlon = new google.maps.LatLng(lat, lon);
+        mapholder = document.getElementById("map-sec");
+        mapholder.style.height = "20em";
+        mapholder.style.width = "100%";
+
+        var myOptions = {
+          center: latlon,
+          zoom: 15,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          mapTypeControl: false,
+          navigationControlOptions: {
+            style: google.maps.NavigationControlStyle.SMALL,
+          },
+        };
+        var map = new google.maps.Map(
+          document.getElementById("map-sec"),
+          myOptions
+        );
+        var marker = new google.maps.Marker({
+          position: latlon,
+          map: map,
+          title: "You are here!",
+        });
+      }
+
+      function showError(error) {
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation.";
+            break;
+          case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable.";
+            break;
+          case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out.";
+            break;
+          case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred.";
+            break;
+        }
+      }
+    </script>
+  </body>
+</html>

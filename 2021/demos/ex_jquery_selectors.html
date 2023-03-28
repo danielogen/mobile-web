@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<html>
+  <head>
+    <title>JQuery Selectors</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <style>
+      body {
+        font-size: 17px;
+        font-family: arial;
+        background: #f4f4f4;
+        line-height: 1.5em;
+      }
+      header {
+        background: #333;
+        color: #ffffff;
+        padding: 20px;
+        border-bottom: 4px #000 solid;
+        margin-bottom: 10px;
+      }
+      #container {
+        width: 90%;
+        margin: auto;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>JQuery Basics</h1>
+    </header>
+    <div id="container"></div>
+    <h1 class="heading1">Heading One</h1>
+    <p class="para1">
+      Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
+      sapien massa, convallis a pellentesque nec, egestas non nisi. Sed
+      porttitor lectus nibh. Lorem ipsum dolor sit amet, consectetur adipiscing
+      elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis
+      lorem ut libero malesuada feugiat.
+      <span>Nulla quis lorem ut libero malesuada feugiat</span>. Vestibulum ante
+      ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+      Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet
+      ligula. Quisque velit nisi, pretium ut lacinia in, elementum id enim.
+      Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
+    </p>
+
+    <h1 class="heading2">Heading One</h1>
+    <p class="para2">
+      Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
+      sapien massa, convallis a pellentesque nec, egestas non nisi. Sed
+      porttitor lectus nibh. Lorem ipsum dolor sit amet, consectetur adipiscing
+      elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis
+      lorem ut libero malesuada feugiat.
+      <span>Nulla quis lorem ut libero malesuada feugiat</span>. Vestibulum ante
+      ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+      Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet
+      ligula. Quisque velit nisi, pretium ut lacinia in, elementum id enim.
+      Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
+    </p>
+    <ul id="list">
+      <li>List Item</li>
+      <li>List Item</li>
+      <li>List Item</li>
+      <li>List Item</li>
+      <li>List Item</li>
+      <li>List Item</li>
+    </ul>
+    <input type="button" value="Button 1" />
+    <input type="submit" value="Submit" />
+    <input type="text" />
+
+    <a href="http://google.com">Google</a>
+    <a href="http://yahoo.com">Yahoo</a>
+
+    <script>
+      //$("h1").hide();
+      //$("h1.heading1").hide();
+      //$("p span").css("color", "red");
+      //   $("ul#list li:first").css("color", "red"); //css3 selector
+      //   $("ul#list li:last").css("color", "green"); //css3 selector
+      //   $("ul#list li:even").css({
+      //     "background-color": "#ccc",
+      //     "font-size": "2em",
+      //   }); //css3 selector
+      //$('ul#list li:nth-child(3n)').css('list-style', 'none');
+      //$(':text').hide();
+      //$("[href]").css("color", "red");
+      //$('a[href="http://yahoo.com"]').css("color", "green");
+      //$('*').hide()
+    </script>
+  </body>
+</html>
