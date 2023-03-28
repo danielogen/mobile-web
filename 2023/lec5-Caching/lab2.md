@@ -148,11 +148,27 @@ Output
 ```
 End the MySQL session for the test_user:
 
-```
+```mysql
 mysql> quit;
 ```
+Once you’ve set up the `test_store` database, `products` table, and `test_user`, you’ll code a `PHP` script to retrieve data from the` MySQL` database and cache it to `Redis`.
 ### Step 3 — Designing a PHP Script for Fetching and Caching MySQL Data
+In this step, you’ll create a PHP script for retrieving the sample data that you’ve created in the previous step.
 
+When you run the script for the first time, it will read the data from MySQL (that is, from disk) and then cache it to Redis. As a result subsequent reads of the products’ data will be from Redis (that is, from system RAM). System memory is multiple times faster than even the fastest solid-state drive, thus data will be retrieved faster from the Redis cache than reading from the system disk.
+
+> Note: 
+> While you might not get any performance boost, since you are retrieving just a few records from the MySQL database, several benchmarks prove that retrieving cached data from Redis is several times faster than reading it from MySQL when dealing with several hundred thousand records.
+
+Create a `products.php` file in the root directory of your website:
+```bash
+$ sudo nano /var/www/html/products.php
+```
+To start, enter the following information to connect and create an instance of Redis and store it as an object in a `$redis` variable.
+
+The address `127.0.0.1` connects to the localhost. You may change this value if you’re running `Redis` from a remote server. Remember to replace `REDIS_PASSWORD` with the specific password for `Redis` set in the `/etc/redis/redis.conf` configuration file.
+
+Also, enter the appropriate port number. By default, `Redis` runs on port `6379`:
 ### Step 4 — Testing the PHP Script
 
 ### Conclusion
