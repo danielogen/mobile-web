@@ -105,7 +105,52 @@ mysql> product_name VARCHAR(50),
 mysql> price DOUBLE
 mysql> ) Engine = InnoDB;
 ```
+You will receive the following output:
+```mysql
+Output
 
+Query OK, 0 rows affected (0.01 sec)
+```
+Now you’ll populate the products table with some records for testing purposes.
+
+You don’t need to enter data to the `product_id` column manually since the `AUTO_INCREMENT` column will complete this. Run the following commands one by one:
+```mysql
+INSERT INTO products(product_name, price) VALUES ('Virtual Private Servers', '5.00');
+INSERT INTO products(product_name, price) VALUES ('Managed Databases', '15.00');
+INSERT INTO products(product_name, price) VALUES ('Block Storage', '10.00');
+INSERT INTO products(product_name, price) VALUES ('Managed Kubernetes', '60.00');
+INSERT INTO products(product_name, price) VALUES ('Load Balancer', '10.00');
+```
+After running each command, ensure you get this output:
+
+```mysql
+Output
+
+Query OK, 1 row affected (0.00 sec)
+```
+Verify the data using the `SELECT` command:
+```
+SELECT * FROM products;
+```
+You will receive output similar to the following:
+```
+Output
++------------+-------------------------+-------+
+| product_id | product_name            | price |
++------------+-------------------------+-------+
+|          1 | Virtual Private Servers |     5 |
+|          2 | Managed Databases       |    15 |
+|          3 | Block Storage           |    10 |
+|          4 | Managed Kubernetes      |    60 |
+|          5 | Load Balancer           |    10 |
++------------+-------------------------+-------+
+5 rows in set (0.00 sec)
+```
+End the MySQL session for the test_user:
+
+```
+mysql> quit;
+```
 ### Step 3 — Designing a PHP Script for Fetching and Caching MySQL Data
 
 ### Step 4 — Testing the PHP Script
