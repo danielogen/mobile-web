@@ -1,0 +1,1 @@
+# How To Set Up Redis as a Cache for MySQL with PHP on Ubuntu
