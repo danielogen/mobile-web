@@ -18,18 +18,22 @@ Caching data is an integral design feature when you are designing web applicatio
 
 In this Lad, you will use Redis to cache MySQL data with PHP on Ubuntu syst
 ### Prerequisites
+To complete this tutorial, you’ll need the following:
+- Ubuntu server with a non-root user with sudo privileges.
+- Install LAMP: Linux, Apache, MySQL, PHP (LAMP) stack on Ubuntu.
+- A Redis Server set up
 
 ### Step 1 — Installing the Redis Library for PHP
 To begin you’ll install the `php-redis` extension, which will allow you to use PHP to communicate with Redis. Run the following commands to update your server and install the extension:
-```
-sudo apt update
-sudo apt install php-redis
+```console
+$ sudo apt update
+$ sudo apt install php-redis
 ```
 Confirm the installation and restart the Apache web server to load the extension:
+```console
+$ sudo systemctl restart apache2
 ```
-sudo systemctl restart apache2
-```
-
+Now that you have installed your dependencies, you’ll set up your database.
 ### Step 2 — Setting Up a Test Database, Table, and Sample Data
 
 ### Step 3 — Designing a PHP Script for Fetching and Caching MySQL Data
